@@ -19,18 +19,6 @@ Epoll::~Epoll(){
     }
 };
 
-// void Epoll::addFd(int fd,uint32_t op){
-//     struct epoll_event ev;
-//     bzero(&ev,sizeof(ev));
-//     ev.data.fd = fd;
-//     ev.events = op;
-
-//     //调用系统函数epoll_ctl
-//     if(epoll_ctl(epfd_,EPOLL_CTL_ADD,fd,&ev) == -1){
-//         perror("epoll add error");
-//     }
-// }
-
 std::vector<Channel*> Epoll::poll(int timeout){
     std::vector<Channel*> active_channels;
     int nfds = epoll_wait(epfd_,&*events_.begin(),events_.size(),timeout);
@@ -45,6 +33,7 @@ std::vector<Channel*> Epoll::poll(int timeout){
             Channel *ch = (Channel*)events_[i].data.ptr;
 
             ch->setRevents(events_[i].events);
+            std::cout<<"Event happened on fd"<<ch->getFd()<<std::endl;
 
             active_channels.push_back(ch);
         }
@@ -68,7 +57,7 @@ void Epoll::updateChannel(Channel *channel){
     }
     else{
         //若已经在树上，则修改
-        int ret = epoll_ctl(epfd_,EPOLL_CTL_MOD,fd,&ev);
+        int ret = epoll_ctl(epfd_,EPOLL_CTL_MOD,fd,&ev);//改什么？
         if(ret == -1) perror("epoll mod error");
     }
 }

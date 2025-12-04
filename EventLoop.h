@@ -21,6 +21,6 @@ public:
     Epoll* getEpoll() const {return ep_;}//获取Epoll
 
 private:
-    Epoll *ep_;//每一个EventLoop都有属于自己的Epol
+    Epoll *ep_;//每一个EventLoop都有属于自己的Epoll
     bool quit_;//标志位，控制循环退出
 };

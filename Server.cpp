@@ -35,6 +35,7 @@ Server::Server(EventLoop *loop) : loop_(loop){
 
     //绑定回调
     std::function<void()> cb = std::bind(&Server::handleNewConnection,this);//还是没能理解，这个this是指哪个类呢？server？
+    acceptChannel_->setCallback(cb);//少了
 
     //开启监听
     acceptChannel_->enableReading();
