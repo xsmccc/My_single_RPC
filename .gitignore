@@ -1,0 +1,14 @@
+# 忽略编译产生的中间文件
+*.o
+*.obj
+
+# 忽略可执行文件 (假设你的程序叫 server 或 client)
+server
+*.exe
+*.out
+
+# 忽略 VS Code 的配置文件夹
+.vscode/
+
+# 忽略 Vim 的临时文件 (如果你用 Vim)
+*.swp
