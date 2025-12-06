@@ -1,10 +1,8 @@
 #include "InetAddress.h"
-#include <string.h> // 为了使用 bzero 或 memset
+#include <string.h> //bzero 或 memset
 
 // 1. 实现构造函数
-// 这里的 InetAddress:: 意思是：我现在要写 InetAddress 类里的那个构造函数
 InetAddress::InetAddress(uint16_t port, std::string ip) {
-    // 这三行是你昨天的代码，我只是搬过来了
     bzero(&addr_, sizeof(addr_));             // 清空内存
     addr_.sin_family = AF_INET;               // IPv4
     addr_.sin_port = htons(port);             // 端口转网络字节序（小端变大端，8000-0x401F（16415））

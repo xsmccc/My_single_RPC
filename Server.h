@@ -1,21 +1,23 @@
 #pragma once//只能包含一次
+#include <map>
+#include <memory>
 #include "EventLoop.h"
-#include "Socket.h"
-#include "InetAddress.h"
-#include "Channel.h"
 
-//所以说这个server类就是将前面的都集成起来嘛？
+class Acceptor;
+class Socket;
+class TcpConnection;
+
 class Server{
 public:
-    Server(EventLoop *loop);//每个Server对应一个loop（来检查这个socket连接的所有）
+    Server(EventLoop *loop);
     ~Server();
 
-    //处理新连接的回调函数
-    void handleNewConnection();
-
+    void newConnection(Socket *sock);
 private:
-    EventLoop *loop_;       //只需要指针，不负责释放
-    Socket *acceptor_;      //监听Socket
-    InetAddress * addr_;    //地址
-    Channel *acceptChannel_;//监听Socket对应的Channel
+    EventLoop *loop_;
+    std::unique_ptr<Acceptor> acceptor_;// 独占 Acceptor
+    
+    // 用 map 存所有的连接，key 是 fd，value 是智能指针
+    // 只要这个 map 里还存着，连接就不会断
+    std::map<int,std::shared_ptr<TcpConnection>> connections_;
 };

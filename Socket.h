@@ -11,7 +11,7 @@ public:
 
     int fd() const { return sockfd_; }//const-表明在函数内部绝对不会修改当前对象this的任何成员变量；
 
-    void bindAddress(const InetAddress& localaddr); // 调用 bind
+    void bindAddress(const InetAddress& localaddr); // 调用 bind，将端口和地址绑定
     void listen();                                  // 调用 listen
     int accept(InetAddress* peeraddr);              // 调用 accept
 

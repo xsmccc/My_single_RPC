@@ -47,7 +47,7 @@ void Epoll::updateChannel(Channel *channel){
     struct epoll_event ev;
     bzero(&ev,sizeof(ev));//bzero函数
 
-    ev.data.ptr = channel;//这个指针原本是存什么的？原本是data.fd存fd的，这个时候的ptr呢？
+    ev.data.ptr = channel;//直接将epoll事件结构体中的ptr指向channel，从而后续直接取出指针即可获取对象channel
     ev.events = channel->getEvents();//从channel拿希望监听的事件
 
     if(!channel->getInEpoll()){//若fd不在epoll树上，则加入
