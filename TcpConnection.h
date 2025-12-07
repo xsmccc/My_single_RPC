@@ -3,6 +3,7 @@
 #include <string>
 #include <functional>
 #include "InetAddress.h"
+#include "Buffer.h"
 
 class EventLoop;
 class Socket;
@@ -18,6 +19,8 @@ public:
     int getFd() const;
 
 private:
+    Buffer inputBuffer_;  // 接收缓冲区
+    Buffer outputBuffer_; // 发送缓冲区 
     EventLoop *loop_;
     std::unique_ptr<Socket> socket_;
     std::unique_ptr<Channel> channel_;

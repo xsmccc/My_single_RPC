@@ -8,7 +8,8 @@
 #include <sys/socket.h>
 
 Acceptor::Acceptor(EventLoop *loop) : loop_(loop) {
-    acceptSocket_ = new Socket(socket(AF_INET, SOCK_STREAM, 0));
+    acceptSocket_ = std::make_unique<Socket>(socket(AF_INET, SOCK_STREAM, 0));
+
     InetAddress *addr = new InetAddress(8000); // 暂时写死
     acceptSocket_->setReuseAddr(true);
     acceptSocket_->bindAddress(*addr);
@@ -16,7 +17,8 @@ Acceptor::Acceptor(EventLoop *loop) : loop_(loop) {
     // addr 用完就可以删了，因为 socket 已经绑定进内核了
     delete addr;
 
-    acceptChannel_ = new Channel(loop->getEpoll(), acceptSocket_->fd());
+    acceptChannel_ = std::make_unique<Channel>(loop->getEpoll(), acceptSocket_->fd());
+
     // 绑定回调：有新连接 -> 执行 acceptConnection
     std::function<void()> cb = std::bind(&Acceptor::acceptConnection, this);
     acceptChannel_->setCallback(cb);

@@ -2,6 +2,7 @@
 #include <functional>
 #include "Socket.h"
 #include "Channel.h"
+#include <memory>
 
 class EventLoop;
 class Socket;

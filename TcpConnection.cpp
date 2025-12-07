@@ -32,17 +32,20 @@ int TcpConnection::getFd() const {
 }
 
 void TcpConnection::handleRead() {
-    int sockfd = channel_->getFd();
-    char buf[1024] = {0};
-    ssize_t n = read(sockfd, buf, sizeof(buf));
+    int savedError = 0;
+    ssize_t n = inputBuffer_.readFd(channel_->getFd(), &savedError);
     
     if (n > 0) {
-        std::cout << "Recv: " << buf << std::endl;
-        write(sockfd, buf, n); // Echo
+        // 暂时直接把所有数据取出来打印
+        // (以后这里会变成：尝试解析 Protobuf，如果解析成功才取出来)
+        std::cout << "Recv message:  " << inputBuffer_.retrieveAllAsString() << std::endl;
+        //write(channel_->getFd(), inputBuffer_.retrieveAllAsString(), n); // Echo
     } else if (n == 0) {
-        std::cout << "Client disconnected fd=" << sockfd << std::endl;
+        std::cout << "Client disconnected "<<std::endl;
         // 这里非常关键：
         // 暂时只做简单处理：删除 channel，关闭连接
         // delete this; //绝对禁止在 shared_ptr 管理的对象里 delete this
+    }else{
+        std::cout << "Read error" << std::endl;
     }
 }
