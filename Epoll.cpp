@@ -19,6 +19,7 @@ Epoll::~Epoll(){
     }
 };
 
+//负责监听事件
 std::vector<Channel*> Epoll::poll(int timeout){
     std::vector<Channel*> active_channels;
     int nfds = epoll_wait(epfd_,&*events_.begin(),events_.size(),timeout);
@@ -42,6 +43,7 @@ std::vector<Channel*> Epoll::poll(int timeout){
     return active_channels;
 };
 
+//更新监听事件并且将其添加到epoll树上
 void Epoll::updateChannel(Channel *channel){
     int fd = channel->getFd();//从channel中获取fd
     struct epoll_event ev;

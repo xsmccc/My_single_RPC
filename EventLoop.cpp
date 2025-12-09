@@ -15,6 +15,8 @@ void EventLoop::loop(){
     while(!quit_){
         //调用epoll_wait等待事件
         std::vector<Channel*> chs;
+
+        testRisk();
         
         //修改poll的返回值
         chs = ep_->poll();

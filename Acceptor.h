@@ -17,6 +17,8 @@ public:
     Acceptor(EventLoop *loop);
     ~Acceptor();
 
+    void listen();
+
     void acceptConnection();//之前的handleNewConnection
     void setNewConnectionCallback(const NewConnectionCallback &cb) {newConnectionCallback_ = cb;}
 

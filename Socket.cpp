@@ -4,9 +4,11 @@
 #include <sys/socket.h> // socket, bind, listen, accept
 #include <string.h>     // memset
 #include <stdio.h>      // perror
+#include <iostream>
 
 //析构函数的类外实现
 Socket::~Socket() {//为移动语义做铺垫，move后原本的sockfd_会变成-1，表示其为空，此时就不执行析构1了；即有效资源则释放，无效资源则啥也不干；
+    std::cout << "Debug: Socket destructed,fd=" << sockfd_ << std::endl;
     if (sockfd_ != -1) {
         close(sockfd_);
     }

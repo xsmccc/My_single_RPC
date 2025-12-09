@@ -16,6 +16,12 @@ public:
 
     void connectEstablished();
 
+    //定义回调类型
+    using Callback = std::function<void(std::shared_ptr<TcpConnection>)>;
+
+    //保存回调接口
+    void setCloseCallback(const Callback& cb) {closeCallback_ = cb;}
+
     int getFd() const;
 
 private:
@@ -25,5 +31,9 @@ private:
     std::unique_ptr<Socket> socket_;
     std::unique_ptr<Channel> channel_;
 
+    //成员变量-存回调函数
+    Callback closeCallback_;
+
     void handleRead();//处理读事件回调
+    void handleClose(); //处理内部关闭的函数
 };

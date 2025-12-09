@@ -9,20 +9,24 @@
 
 Acceptor::Acceptor(EventLoop *loop) : loop_(loop) {
     acceptSocket_ = std::make_unique<Socket>(socket(AF_INET, SOCK_STREAM, 0));
+    std::cout << "DEBUG: Acceptor Created Socket fd=" << acceptSocket_->fd() << std::endl;
 
-    InetAddress *addr = new InetAddress(8000); // 暂时写死
+    InetAddress addr(8000); // 暂时写死
     acceptSocket_->setReuseAddr(true);
-    acceptSocket_->bindAddress(*addr);
-    acceptSocket_->listen();
-    // addr 用完就可以删了，因为 socket 已经绑定进内核了
-    delete addr;
+    acceptSocket_->bindAddress(addr);
 
     acceptChannel_ = std::make_unique<Channel>(loop->getEpoll(), acceptSocket_->fd());
 
     // 绑定回调：有新连接 -> 执行 acceptConnection
     std::function<void()> cb = std::bind(&Acceptor::acceptConnection, this);
     acceptChannel_->setCallback(cb);
-    acceptChannel_->enableReading();
+    std::cout << "DEBUG: Acceptor Constructor Finished" << std::endl; //
+}
+
+
+void Acceptor::listen(){
+    acceptSocket_->listen();//开始监听端口
+    acceptChannel_->enableReading();//开始关注Epoll事件
 }
 
 Acceptor::~Acceptor() {
@@ -36,7 +40,6 @@ void Acceptor::acceptConnection() {
     if(connfd != -1){
         if(newConnectionCallback_){
             // 新生成的 socket 包装一下，扔给 Server
-            // 我们这里先简单传一个 new 出来的 Socket 对象
             // Server 那边会把它接管过去
             Socket *clientSock = new Socket(connfd); 
             newConnectionCallback_(clientSock); 

@@ -19,7 +19,7 @@ TcpConnection::TcpConnection(EventLoop *loop, Socket *sock)
 }
 
 TcpConnection::~TcpConnection() {
-    std::cout << "TcpConnection::~TcpConnection fd=" << socket_->fd() << std::endl;
+    std::cout << "Debug: TcpConnection destructed,fd= " << socket_->fd() << std::endl;
 }
 
 // 连接建立完成（Server 创建完对象后调用）
@@ -42,10 +42,20 @@ void TcpConnection::handleRead() {
         //write(channel_->getFd(), inputBuffer_.retrieveAllAsString(), n); // Echo
     } else if (n == 0) {
         std::cout << "Client disconnected "<<std::endl;
+        handleClose();
         // 这里非常关键：
         // 暂时只做简单处理：删除 channel，关闭连接
         // delete this; //绝对禁止在 shared_ptr 管理的对象里 delete this
     }else{
         std::cout << "Read error" << std::endl;
+        handleClose();
+    }
+}
+
+void TcpConnection::handleClose(){
+    std::cout << "TcpConnection::handleClose fd=" << socket_->fd()<<std::endl;
+
+    if(closeCallback_){
+        closeCallback_(shared_from_this());
     }
 }
