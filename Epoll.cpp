@@ -59,7 +59,7 @@ void Epoll::updateChannel(Channel *channel){
     }
     else{
         //若已经在树上，则修改
-        int ret = epoll_ctl(epfd_,EPOLL_CTL_MOD,fd,&ev);//改什么？
+        int ret = epoll_ctl(epfd_,EPOLL_CTL_MOD,fd,&ev);
         if(ret == -1) perror("epoll mod error");
     }
 }

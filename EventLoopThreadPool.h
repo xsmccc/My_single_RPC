@@ -14,7 +14,7 @@ public:
 
     void setThreadNum(int numThreads) {numThreads_ = numThreads;}
 
-    void start(const std::function<void(EventLoop*)>& cb = std::function<void(EventLoop*)>());//这个定义没看懂，是一个const std::function<void(EventLoop*)>类型的cb为入口参数嘛？
+    void start(const std::function<void(EventLoop*)>& cb = std::function<void(EventLoop*)>());//默认参数-不传参数就认定为空对象，传参数就用cb
 
     EventLoop* getNextLoop();
 private:

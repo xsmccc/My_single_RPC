@@ -43,7 +43,8 @@ void Acceptor::acceptConnection() {
             // Server 那边会把它接管过去
             Socket *clientSock = new Socket(connfd); 
             newConnectionCallback_(clientSock); 
-        } else {
+        } 
+        else {
             // 没人管这个连接，那就关掉
             close(connfd);
         }

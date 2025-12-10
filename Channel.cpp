@@ -12,11 +12,6 @@ Channel::~Channel(){
     //删除epoll中的fd
 }
 
-void Channel::enableReading(){
-    events_ = EPOLLIN | EPOLLET;
-    ep_->updateChannel(this);
-}
-
 void Channel::handleEvent(){
     //读事件
     if(revents_ & (EPOLLIN | EPOLLPRI)){
@@ -24,4 +19,8 @@ void Channel::handleEvent(){
             callback_();//执行绑定的回调函数
         }
     }
+}
+
+void Channel::update(){
+    ep_->updateChannel(this);
 }

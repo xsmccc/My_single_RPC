@@ -9,7 +9,7 @@
 
 Server::Server(EventLoop *loop) 
     : loop_(loop) 
-    , acceptor_(std::make_unique<Acceptor>(loop))//这个（loop）是什么意思？// Server 只负责创建一个 Acceptor 对象。
+    , acceptor_(std::make_unique<Acceptor>(loop))// Server 只负责创建一个 Acceptor 对象。
     , threadPool_(std::make_unique<EventLoopThreadPool>(loop))
     , started_(false) // 1. 初始化标志位
 { 
@@ -53,8 +53,6 @@ void Server::newConnection(Socket *sock) {
     //从线程池中取一个ioLoop
     EventLoop *ioLoop = threadPool_->getNextLoop();
 
-    ioLoop->testRisk();
-
     std::cout<<"New conn on loop: "<<ioLoop << std::endl;
 
     //把新连接交给ioLoop管理
@@ -63,10 +61,7 @@ void Server::newConnection(Socket *sock) {
     connections_[sock->fd()] = conn;
     conn->setCloseCallback(std::bind(&Server::removeConnection,this,std::placeholders::_1));
 
-    //由于connectEstablished要调用channel->enableReading 而channel属于ioLoop（子线程）
-    //因此直接在主线程调用ioLoop的函数会有线程安全问题
-    //目前先直接调用，后续修改
-    conn->connectEstablished();
+    ioLoop->runInLoop(std::bind(&TcpConnection::connectEstablished,conn));
 }
 
 void Server::removeConnection(std::shared_ptr<TcpConnection> conn){

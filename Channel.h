@@ -12,7 +12,16 @@ public:
     ~Channel();
 
     //开启监听事件
-    void enableReading();
+    void enableReading(){
+        events_ = kReadEvent| kEtEvent;
+        update();
+    }
+
+    void disableAll() {
+        events_ = kNoneEvent;
+        update();}
+
+    bool isNoneEvent() const {return events_ == kNoneEvent;}
 
     //获取fd
     int getFd() const {return fd_;}
@@ -38,11 +47,17 @@ public:
     void handleEvent();
 
 private:
+    void update();
     Epoll *ep_;             //Epoll类
     int fd_;                //标识符
     uint32_t events_;       //监听的事件
     uint32_t revents_;      //当前发生的事件
     bool inEpoll_;          //标记是否在红黑树上
+
+    static const int kNoneEvent = 0;
+    static const int kReadEvent = EPOLLIN | EPOLLPRI;
+    static const int kWriteEvent = EPOLLOUT;
+    static const int kEtEvent = EPOLLET; //用 ET 模式
 
     EventCallback callback_;//保存用户注册的回调函数
 };

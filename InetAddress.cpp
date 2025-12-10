@@ -1,7 +1,7 @@
 #include "InetAddress.h"
 #include <string.h> //bzero 或 memset
 
-// 1. 实现构造函数
+//实现构造函数
 InetAddress::InetAddress(uint16_t port, std::string ip) {
     bzero(&addr_, sizeof(addr_));             // 清空内存
     addr_.sin_family = AF_INET;               // IPv4
@@ -13,7 +13,7 @@ InetAddress::InetAddress(uint16_t port, std::string ip) {
     addr_.sin_addr.s_addr = inet_addr(ip.c_str()); 
 }
 
-// 2. 实现 toIp 方法
+//实现 toIp 方法
 //用于后续日志打印
 std::string InetAddress::toIp() const {
     // inet_ntoa 负责把网络字节序的整数转成字符串 "192.168.x.x"
