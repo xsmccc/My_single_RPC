@@ -7,6 +7,7 @@
 #include <unistd.h>
 #include "EventLoopThreadPool.h"
 
+
 Server::Server(EventLoop *loop) 
     : loop_(loop) 
     , acceptor_(std::make_unique<Acceptor>(loop))// Server 只负责创建一个 Acceptor 对象。
@@ -57,6 +58,8 @@ void Server::newConnection(Socket *sock) {
 
     //把新连接交给ioLoop管理
     std::shared_ptr<TcpConnection> conn = std::make_shared<TcpConnection>(ioLoop,sock);
+
+    conn->setMessageCallback(messageCallback_);
 
     connections_[sock->fd()] = conn;
     conn->setCloseCallback(std::bind(&Server::removeConnection,this,std::placeholders::_1));

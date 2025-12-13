@@ -1,0 +1,1 @@
+/usr/bin/c++  -g -Wall -rdynamic CMakeFiles/consumer.dir/mycode_client.cpp.o CMakeFiles/consumer.dir/user.pb.cc.o -o /home/xsm/proto_rpc/myCode_Rpc/bin/consumer  -Wl,-rpath,/home/xsm/proto_rpc/myCode_Rpc/lib /home/xsm/proto_rpc/myCode_Rpc/lib/libmprpc.so -lprotobuf -lpthread 

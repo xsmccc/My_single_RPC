@@ -1,0 +1,9 @@
+syntax = "proto3";  //声明使用proto3语法版本
+
+package mprpc;    //声明包
+
+message RpcHeader{
+    bytes service_name = 1; //字段类名 类型bytes 编号1
+    bytes method_name = 2;  //字段方法名 类型bytes 编号2
+    uint32 args_size = 3;   //参数序列化后的长度
+}

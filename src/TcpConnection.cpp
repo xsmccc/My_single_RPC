@@ -38,8 +38,12 @@ void TcpConnection::handleRead() {
     if (n > 0) {
         // 暂时直接把所有数据取出来打印
         // (以后这里会变成：尝试解析 Protobuf，如果解析成功才取出来)
-        std::cout << "Recv message:  " << inputBuffer_.retrieveAllAsString() << std::endl;
+        // std::cout << "Recv message:  " << inputBuffer_.retrieveAllAsString() << std::endl;
         //write(channel_->getFd(), inputBuffer_.retrieveAllAsString(), n); // Echo
+        if(messageCallback_)
+        {
+            messageCallback_(shared_from_this(),&inputBuffer_);
+        }
     } else if (n == 0) {
         std::cout << "Client disconnected "<<std::endl;
         handleClose();
@@ -57,5 +61,14 @@ void TcpConnection::handleClose(){
 
     if(closeCallback_){
         closeCallback_(shared_from_this());
+    }
+}
+
+void TcpConnection::send(const std::string& buf)
+{
+    // 直接写入 socket
+    if (channel_)
+    {
+        ::write(channel_->getFd(), buf.c_str(), buf.size());
     }
 }

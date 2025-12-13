@@ -21,15 +21,21 @@ public:
 
     //保存回调接口
     void setCloseCallback(const Callback& cb) {closeCallback_ = cb;}
+    void setMessageCallback(const std::function<void(const std::shared_ptr<TcpConnection>&,Buffer*)>& cb)
+    {
+        messageCallback_ = cb;
+    }
 
     int getFd() const;
 
+    void send(const std::string& buf);
 private:
     Buffer inputBuffer_;  // 接收缓冲区
     Buffer outputBuffer_; // 发送缓冲区 
     EventLoop *loop_;
     std::unique_ptr<Socket> socket_;
     std::unique_ptr<Channel> channel_;
+    std::function<void(const std::shared_ptr<TcpConnection>&,Buffer*)> messageCallback_;
 
     //成员变量-存回调函数
     Callback closeCallback_;

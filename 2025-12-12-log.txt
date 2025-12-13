@@ -1,0 +1,7 @@
+17:44:58 => [INFO] RpcProvider start service at ip:127.0.0.1 port:8000
+17:44:58 => [INFO] ==================================
+17:45:2 => [INFO] header_size: 25
+17:45:2 => [INFO] service_name: UserServiceRpc
+17:45:2 => [INFO] method_name: Login
+17:45:2 => [INFO] args_size: 18
+17:45:2 => [INFO] ==================================

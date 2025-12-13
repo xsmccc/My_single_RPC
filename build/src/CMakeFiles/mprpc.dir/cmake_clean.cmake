@@ -1,0 +1,41 @@
+file(REMOVE_RECURSE
+  "/home/xsm/proto_rpc/myCode_Rpc/lib/libmprpc.pdb"
+  "/home/xsm/proto_rpc/myCode_Rpc/lib/libmprpc.so"
+  "CMakeFiles/mprpc.dir/Acceptor.cpp.o"
+  "CMakeFiles/mprpc.dir/Acceptor.cpp.o.d"
+  "CMakeFiles/mprpc.dir/Buffer.cpp.o"
+  "CMakeFiles/mprpc.dir/Buffer.cpp.o.d"
+  "CMakeFiles/mprpc.dir/Channel.cpp.o"
+  "CMakeFiles/mprpc.dir/Channel.cpp.o.d"
+  "CMakeFiles/mprpc.dir/Epoll.cpp.o"
+  "CMakeFiles/mprpc.dir/Epoll.cpp.o.d"
+  "CMakeFiles/mprpc.dir/EventLoop.cpp.o"
+  "CMakeFiles/mprpc.dir/EventLoop.cpp.o.d"
+  "CMakeFiles/mprpc.dir/EventLoopThread.cpp.o"
+  "CMakeFiles/mprpc.dir/EventLoopThread.cpp.o.d"
+  "CMakeFiles/mprpc.dir/EventLoopThreadPool.cpp.o"
+  "CMakeFiles/mprpc.dir/EventLoopThreadPool.cpp.o.d"
+  "CMakeFiles/mprpc.dir/InetAddress.cpp.o"
+  "CMakeFiles/mprpc.dir/InetAddress.cpp.o.d"
+  "CMakeFiles/mprpc.dir/Logger.cpp.o"
+  "CMakeFiles/mprpc.dir/Logger.cpp.o.d"
+  "CMakeFiles/mprpc.dir/MprpcChannel.cpp.o"
+  "CMakeFiles/mprpc.dir/MprpcChannel.cpp.o.d"
+  "CMakeFiles/mprpc.dir/RpcProvider.cpp.o"
+  "CMakeFiles/mprpc.dir/RpcProvider.cpp.o.d"
+  "CMakeFiles/mprpc.dir/Server.cpp.o"
+  "CMakeFiles/mprpc.dir/Server.cpp.o.d"
+  "CMakeFiles/mprpc.dir/Socket.cpp.o"
+  "CMakeFiles/mprpc.dir/Socket.cpp.o.d"
+  "CMakeFiles/mprpc.dir/TcpConnection.cpp.o"
+  "CMakeFiles/mprpc.dir/TcpConnection.cpp.o.d"
+  "CMakeFiles/mprpc.dir/rpcheader.pb.cc.o"
+  "CMakeFiles/mprpc.dir/rpcheader.pb.cc.o.d"
+  "CMakeFiles/mprpc.dir/test_main.cpp.o"
+  "CMakeFiles/mprpc.dir/test_main.cpp.o.d"
+)
+
+# Per-language clean rules from dependency scanning.
+foreach(lang CXX)
+  include(CMakeFiles/mprpc.dir/cmake_clean_${lang}.cmake OPTIONAL)
+endforeach()
